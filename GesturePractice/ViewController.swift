@@ -17,7 +17,6 @@ class ViewController: UIViewController {
         setupViews()
         fileIcon.frame.origin = CGPoint(x: 24, y: 34.0) //already set the anchors, but this will set the origin again, and therefor will be able to be read below.
         fileViewOrigin = fileIcon.frame.origin //CGPoint(x: 24, y: 34.0) //fileIcon.frame.origin
-        print(fileIcon.frame.origin)
     }
     
     lazy var trashCan: UIImageView = {
@@ -44,10 +43,8 @@ class ViewController: UIViewController {
     
     func setupViews(){
         view.addSubviews(trashCan, fileIcon)
-        //addPanGestureTo(view: fileIcon)
-        //addTapGestureTo(view: trashCan)
-        view.bringSubviewToFront(fileIcon)
-        //view.bringSubviewToFront(trashCan)
+        //addPanGestureTo(view: fileIcon) //old way of adding the gestureRecognizer.
+        view.bringSubviewToFront(fileIcon)//allows the filIcon to be above the trashcan.
         
         trashCan.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24).isActive = true
         trashCan.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24).isActive = true
@@ -60,7 +57,7 @@ class ViewController: UIViewController {
         fileIcon.heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
-    //Refactor
+    //Refactor done...
     @objc func handlePan(sender: UIPanGestureRecognizer){
         let fileView = sender.view!
         
@@ -83,7 +80,6 @@ class ViewController: UIViewController {
     /////////////////////////////////////////////////////////////////////////////
     func moveViewWithPan(view: UIView, sender: UIPanGestureRecognizer){
         let tranlation = sender.translation(in: view)
-        
         view.center = CGPoint(x: view.center.x + tranlation.x, y: view.center.y + tranlation.y)
         sender.setTranslation(CGPoint.zero, in: view)
     }
